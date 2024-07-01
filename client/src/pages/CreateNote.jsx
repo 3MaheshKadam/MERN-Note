@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const CreateNote = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+  return <div>createnote</div>;
+};
 
-export default CreateNote
+export default CreateNote;
