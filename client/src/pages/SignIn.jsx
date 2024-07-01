@@ -73,16 +73,20 @@ const SignIn = () => {
           id="password"
           onChange={handleChange}
         />
-        <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:text-secondary">
-          Sign-In
+        <button
+          disabled={loading}
+          className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+        >
+          {loading ? "Loading..." : "Sign In"}
         </button>
       </form>
-      <div className="flex gap-2 text-sm mt-3">
-        <span className="text-gray-500">Have an Account?</span>
-        <Link to="/signup" className="text-sm text-blue-500">
-          Sign Up
+      <div className="flex gap-2 mt-5">
+        <p>Dont have an account?</p>
+        <Link to={"/sign-up"}>
+          <span className="text-blue-700">Sign up</span>
         </Link>
       </div>
+      {error && <p className="text-red-500 mt-5">{error}</p>}
     </div>
   );
 };
