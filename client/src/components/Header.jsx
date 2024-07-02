@@ -25,9 +25,9 @@ export default function Header() {
               Home
             </li>
           </Link>
-          <Link to="/create-note">
+          <Link to="/about">
             <li className="hidden sm:inline text-white hover:text-accent">
-              Note
+              About
             </li>
           </Link>
           <Link to="/signin">
