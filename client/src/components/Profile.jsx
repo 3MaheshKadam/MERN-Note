@@ -16,12 +16,14 @@ const Profile = () => {
           className="border p-4  rounded-lg border-teal-300 "
           placeholder="name"
           id="username"
+          defaultValue={currentUser.username}
         />
         <input
           type="email"
           className="border p-4  rounded-lg border-teal-300  "
           placeholder="email"
           id="email"
+          defaultValue={currentUser.email}
         />
         <input
           type="password"
