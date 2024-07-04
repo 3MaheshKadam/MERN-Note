@@ -3,6 +3,13 @@ import {
   updateUserStart,
   updateUserFailure,
   updateUserSuccess,
+  deleteUserStart,
+  deleteUserFailure,
+  deleteUserSuccess,
+
+  // signOutStart,
+  // signOutSuccess,
+  // signOutFailure,
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
@@ -44,7 +51,37 @@ const Profile = () => {
       dispatch(updateUserFailure(error.message));
     }
   };
+  const handleDeleteUser = async () => {
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
+    }
+  };
 
+  // const handleSignOut = async () => {
+  //   try {
+  //     dispatch(signOutStart());
+  //     const res = await fetch("/api/auth/signout");
+  //     const data = await res.json();
+  //     if (data.success === false) {
+  //       dispatch(signOutFailure(data.message));
+  //       return;
+  //     }
+  //     dispatch(signOutSuccess(data));
+  //   } catch (error) {
+  //     dispatch(signOutFailure(error.message));
+  //   }
+  // };
   return (
     <div className="mx-auto max-w-lg my-20  border rounded-xl  border-teal-300 p-4 bg-teal-50 shadow-lg">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
@@ -85,8 +122,18 @@ const Profile = () => {
         </button>
       </form>
       <div className="flex justify-between mt-5">
-        <span className="text-red-500 cursor-pointer">Delete account</span>
-        <span className="text-red-500 cursor-pointer">Sign out</span>
+        <span
+          onClick={handleDeleteUser}
+          className="text-red-500 cursor-pointer"
+        >
+          Delete account
+        </span>{" "}
+        <span
+          // onClick={handleSignOut}
+          className="text-red-500 cursor-pointer"
+        >
+          Sign out
+        </span>
       </div>
       <p className="text-red-700 mt-5">{error ? error : ""}</p>
       <p className="text-green-700 mt-5">
