@@ -6,14 +6,12 @@ import {
   deleteUserStart,
   deleteUserFailure,
   deleteUserSuccess,
-
-  // signOutStart,
-  // signOutSuccess,
-  // signOutFailure,
+  signOutUserStart,
+  signOutUserSuccess,
+  signOutUserFailure,
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-// const { currentUser, l } = useSelector((state) => state.user);
 
 const Profile = () => {
   const [updateSuccess, setUpdateSuccess] = useState(false);
@@ -68,20 +66,22 @@ const Profile = () => {
     }
   };
 
-  // const handleSignOut = async () => {
-  //   try {
-  //     dispatch(signOutStart());
-  //     const res = await fetch("/api/auth/signout");
-  //     const data = await res.json();
-  //     if (data.success === false) {
-  //       dispatch(signOutFailure(data.message));
-  //       return;
-  //     }
-  //     dispatch(signOutSuccess(data));
-  //   } catch (error) {
-  //     dispatch(signOutFailure(error.message));
-  //   }
-  // };
+  const handleSignOut = async () => {
+    try {
+      dispatch(signOutUserStart());
+      const res = await fetch("/api/auth/signout");
+
+      const data = await res.json();
+
+      if (data.success === false) {
+        dispatch(signOutUserFailure(data.message));
+        return;
+      }
+      dispatch(signOutUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(data.message));
+    }
+  };
   return (
     <div className="mx-auto max-w-lg my-20  border rounded-xl  border-teal-300 p-4 bg-teal-50 shadow-lg">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
@@ -128,10 +128,7 @@ const Profile = () => {
         >
           Delete account
         </span>{" "}
-        <span
-          // onClick={handleSignOut}
-          className="text-red-500 cursor-pointer"
-        >
+        <span onClick={handleSignOut} className="text-red-500 cursor-pointer">
           Sign out
         </span>
       </div>

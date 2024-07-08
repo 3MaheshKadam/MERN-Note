@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import userRouter from "./router/user.router.js";
 import authRouter from "./router/auth.router.js";
 import cookieParser from "cookie-parser";
+import noteRouter from "./router/notes.router.js";
 
 dotenv.config();
 
@@ -21,7 +22,7 @@ app.use(cookieParser());
 
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
-
+app.use("/api/notes", noteRouter);
 app.listen(3000, () => {
   console.log("server is running on port no 3000");
 });
