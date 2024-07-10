@@ -10,10 +10,7 @@ const noteSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    category: {
-      type: String,
-      required: true,
-    },
+
     userRef: {
       type: String,
       required: true,
