@@ -33,7 +33,7 @@ const CreateNote = () => {
         },
       });
       setLoading(false);
-      navigate(`/note/${response.data.note._id}`);
+      navigate(`/notes/${response.data.note._id}`);
     } catch (error) {
       setError(error.response?.data?.message || "An error occurred");
       setLoading(false);

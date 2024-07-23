@@ -10,6 +10,7 @@ import Home from "./pages/Home.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import Profile from "./components/Profile.jsx";
 import CreateNote from "./pages/CreateNote.jsx";
+import NoteDetail from "./pages/NoteDetail.jsx";
 
 const App = () => {
   return (
@@ -20,6 +21,8 @@ const App = () => {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/about" element={<About />} />
+        <Route path="/notes/:id" element={<NoteDetail />} />
+
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />
         </Route>

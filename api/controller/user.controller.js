@@ -2,6 +2,7 @@ import express from "express";
 import { errorHandler } from "../utils/error.js";
 import User from "../model/user.model.js";
 import bcryptjs from "bcryptjs";
+import Note from "../model/notes.model.js";
 export const test = (req, res) => {
   res.json({
     message: "hello ansistors , meet the best in the bloodline",
@@ -44,5 +45,21 @@ export const deleteUser = async (req, res, next) => {
     res.status(200).json("user deleted successfully");
   } catch (error) {
     next(error);
+  }
+};
+
+export const getUserNotes = async (req, res, next) => {
+  console.log(`User ID: ${req.user.id}`);
+  console.log(`Requested Note ID: ${req.params.id}`);
+
+  if (req.user.id === req.params.id) {
+    try {
+      const notes = await Note.find({ userRef: req.user.id });
+      res.status(200).json(notes);
+    } catch (error) {
+      next(error);
+    }
+  } else {
+    return next(errorHandler(401, "You can only view your own notes!"));
   }
 };
