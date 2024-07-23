@@ -8,3 +8,22 @@ export const createNote = async (req, res, next) => {
     next(err);
   }
 };
+
+export const deleteNote = async (req, res, next) => {
+  const note = await Notes.findById(req.params.id);
+
+  if (!note) {
+    return next(errorHandler(404, "Note not found!"));
+  }
+
+  if (req.user.id !== note.userRef.toString()) {
+    return next(errorHandler(401, "You can only delete your own notes!"));
+  }
+
+  try {
+    await Notes.findByIdAndDelete(req.params.id);
+    res.status(200).json({ success: true, message: "Note has been deleted!" });
+  } catch (error) {
+    next(error);
+  }
+};

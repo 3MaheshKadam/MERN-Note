@@ -31,12 +31,20 @@ const Home = () => {
     fetchNotes();
   }, [currentUser._id]);
 
-  const handleDelete = async (noteId) => {
+  const handleDeleteNote = async (noteId) => {
     try {
-      await axios.delete(`/api/notes/${noteId}`);
-      setNotes(notes.filter((note) => note._id !== noteId));
+      const res = await fetch(`/api/notes/delete/${noteId}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        console.log(data.message);
+        return;
+      }
+
+      setNotes((prev) => prev.filter((note) => note._id !== noteId));
     } catch (error) {
-      setError(error.response?.data?.message || "An error occurred");
+      console.log(error.message);
     }
   };
 
@@ -110,7 +118,7 @@ const Home = () => {
                   Edit
                 </Link>
                 <button
-                  onClick={() => handleDelete(note._id)}
+                  onClick={() => handleDeleteNote(note._id)}
                   className="bg-red-500 text-white px-3 py-1 rounded-lg"
                 >
                   Delete
