@@ -27,3 +27,24 @@ export const deleteNote = async (req, res, next) => {
     next(error);
   }
 };
+
+export const updateNote = async (req, res, next) => {
+  const note = await Notes.findById(req.params.id);
+  if (!note) {
+    return next(errorHandler(404, "note not found!"));
+  }
+  if (req.user.id !== note.userRef) {
+    return next(errorHandler(401, "You can only update your own note!"));
+  }
+
+  try {
+    const updatedNotes = await Notes.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    res.status(200).json(updatedNotes);
+  } catch (error) {
+    next(error);
+  }
+};
