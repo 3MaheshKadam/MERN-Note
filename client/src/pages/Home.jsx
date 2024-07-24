@@ -112,7 +112,7 @@ const Home = () => {
             >
               <div className="absolute top-3 right-3 flex gap-2">
                 <Link
-                  to={`/notes/edit/${note._id}`}
+                  to={`/update-note/${note._id}`}
                   className="bg-blue-500 text-white px-3 py-1 rounded-lg"
                 >
                   Edit
