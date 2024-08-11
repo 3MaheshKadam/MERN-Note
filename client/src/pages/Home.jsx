@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Home = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -105,33 +106,39 @@ const Home = () => {
               />
             </div>
           </form>
-          {notes.map((note) => (
-            <div
-              key={note._id}
-              className="border p-3 rounded-lg relative h-48 flex flex-col"
-            >
-              <div className="absolute top-3 right-3 flex gap-2">
-                <Link
-                  to={`/update-note/${note._id}`}
-                  className="bg-blue-500 text-white px-3 py-1 rounded-lg"
-                >
-                  Edit
+          <AnimatePresence>
+            {notes.map((note) => (
+              <motion.div
+                key={note._id}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -50 }}
+                transition={{ duration: 0.5 }}
+                className="border p-3 rounded-lg relative h-48 flex flex-col"
+              >
+                <div className="absolute top-3 right-3 flex gap-2">
+                  <Link
+                    to={`/update-note/${note._id}`}
+                    className="bg-blue-500 text-white px-3 py-1 rounded-lg"
+                  >
+                    Edit
+                  </Link>
+                  <button
+                    onClick={() => handleDeleteNote(note._id)}
+                    className="bg-red-500 text-white px-3 py-1 rounded-lg"
+                  >
+                    Delete
+                  </button>
+                </div>
+                <Link to={`/notes/${note._id}`} className="flex-grow">
+                  <h2 className="text-xl font-semibold overflow-hidden text-ellipsis whitespace-nowrap">
+                    {note.title}
+                  </h2>
+                  <p className="py-4">{note.content}</p>
                 </Link>
-                <button
-                  onClick={() => handleDeleteNote(note._id)}
-                  className="bg-red-500 text-white px-3 py-1 rounded-lg"
-                >
-                  Delete
-                </button>
-              </div>
-              <Link to={`/notes/${note._id}`} className="flex-grow">
-                <h2 className="text-xl font-semibold   overflow-hidden text-ellipsis whitespace-nowrap">
-                  {note.title}
-                </h2>
-                <p className="py-4">{note.content}</p>
-              </Link>
-            </div>
-          ))}
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
       )}
     </main>

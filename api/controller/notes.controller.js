@@ -58,15 +58,3 @@ export const getNote = async (req, res, next) => {
     next(error);
   }
 };
-
-// export const getNote = async (req, res, next) => {
-//   try {
-//     const note = await Notes.findById(req.params.id);
-//     if (!note) {
-//       return next(errorHandler(404, "Note not found!"));
-//     }
-//     res.status(200).json(note);
-//   } catch (error) {
-//     next(error);
-//   }
-// };
